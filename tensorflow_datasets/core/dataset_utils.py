@@ -47,10 +47,7 @@ def build_dataset(filepattern,
     `tf.data.Dataset`
   """
   dataset = tf.data.Dataset.list_files(filepattern, shuffle=shuffle_files)
-  dataset = dataset.interleave(
-      dataset_from_file_fn,
-      cycle_length=parallel_reads,
-      num_parallel_calls=parallel_reads)
+  dataset = dataset.interleave(dataset_from_file_fn, cycle_length=parallel_reads)
   if process_fn is not None:
     dataset = dataset.map(process_fn)
   return dataset

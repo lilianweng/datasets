@@ -4,6 +4,7 @@
 # Byte-compiled
 _pycache__/
 .cache/
+.idea/
 
 # Python egg metadata, regenerated from source files by setuptools.
 /*.egg-info

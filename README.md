@@ -23,17 +23,17 @@ pip install tensorflow-datasets
 import tensorflow_datasets as tfds
 
 # See available datasets
-print(datasets.list_builders())
+print(tfds.list_builders())
 
 # Construct a tf.data.Dataset
-dataset = datasets.load(name="mnist",
-                        split=datasets.Split.TRAIN,
-                        data_dir="~/tfdata",
-                        download=True)
+dataset = tfds.load(name="mnist",
+                    split=tfds.Split.TRAIN,
+                    data_dir="~/tfdata",
+                    download=True)
 
 # Build your input pipeline
 dataset = dataset.shuffle(1000).batch(128).prefetch(1)
-features = dataset.make_oneshot_iterator().get_next()
+features = dataset.make_one_shot_iterator().get_next()
 image, label = features["input"], features["target"]
 ```
 
@@ -47,12 +47,12 @@ import tensorflow_datasets as tfds
 # The following is the equivalent of the `load` call above.
 
 # You can fetch the DatasetBuilder class by string
-mnist_builder = datasets.builder("mnist")(data_dir="~/tfdata")
+mnist_builder = tfds.builder("mnist")(data_dir="~/tfdata")
 
 # Download the dataset
 mnist_builder.download_and_prepare()
 # Construct a tf.data.Dataset
-dataset = mnist_builder.as_dataset(split=datasets.Split.TRAIN)
+dataset = mnist_builder.as_dataset(split=tfds.Split.TRAIN)
 ```
 
 ### Non-TensorFlow Usage
@@ -63,9 +63,9 @@ method, which takes the same arguments as `as_dataset`.
 ```python
 import tensorflow_datasets as tfds
 
-mnist_builder = datasets.builder("mnist")(data_dir="~/tfdata")
+mnist_builder = tfds.builder("mnist")(data_dir="~/tfdata")
 mnist_builder.download_and_prepare()
-for element in mnist_builder.numpy_iterator(split=datasets.Split.TRAIN):
+for element in mnist_builder.numpy_iterator(split=tfds.Split.TRAIN):
   numpy_image, numpy_label = element["input"], element["target"]
 ```
 
